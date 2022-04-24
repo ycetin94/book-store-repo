@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+    database:
+        image: mysql:5.7
+        container_name: database
+        environment:
+            MYSQL_ROOT_PASSWORD: P123456p
+            MYSQL_DATABASE: bookstore_db
+            MYSQL_USER: clarusway
+            MYSQL_PASSWORD: Clarusway_1
+        networks:
+            - clarusnet
+
+    myapp:
+        image: ycetin94/bookstoreapi:latest
+        container_name: myapp
+        restart: always #
+        depends_on:
+            - database  #first   create database
+        ports:
+            - "80:80"   # create  open   port   on ec2   sec   grup, first 80 for host on ec2;  second 80 for container database
+        networks:
+            - clarusnet
+
+networks:
+    clarusnet:
